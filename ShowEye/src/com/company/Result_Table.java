@@ -1,8 +1,8 @@
 package com.company;
 
 import javax.swing.*;
-import java.awt.*;
 
+// Take code from the constructor and turn it into a function if that is what you need
 public class Result_Table {
     private JPanel searchResults;
     private String[] genres = {"Action", "Horror", "Comedy"};
@@ -11,8 +11,9 @@ public class Result_Table {
         // Box and scrollbar
         searchResults = new JPanel();
         searchResults.setSize(400, 400);
-        searchResults.setLayout(new FlowLayout());
+        searchResults.setLayout(new BoxLayout(searchResults, BoxLayout.PAGE_AXIS));
         JScrollPane srScroll = new JScrollPane(searchResults, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        srScroll.setSize(400, 400);
 
         // test entertainment
         Entertainment e1 = new Entertainment("Movie 1", "Action"),
@@ -36,8 +37,8 @@ public class Result_Table {
         }
         frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(250,100);
         frame.add(srScroll);
-        frame.pack();
         frame.setVisible(true);
     }
 }
