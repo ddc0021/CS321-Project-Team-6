@@ -1,32 +1,26 @@
 package com.company;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
-import java.util.Scanner;
-import java.util.Vector;
-import java.util.regex.Pattern;
-import com.jaunt.component.*;
 import com.jaunt.*;
-import java.io.*;
 
 public class Jaunt_Scraper {
-    private FileReader m_FileReader;
     private File m_File;
+    private File m_Dir;
     private FileWriter m_FileWriter;
     private UserAgent m_UserAgent;
-    private Element m_Element;
     private String m_WebData;
     private String m_FilePath;
 
     public Jaunt_Scraper() //Must place scraper functionality in this class!!!
     {
         //File path is specific to David's Mac
-        m_File = new File("/Users/davidcaddell/Documents/CS321/Temp/Hulu_Data.txt");
+        m_Dir = new File("Data");
+        m_Dir.mkdirs();
+        m_File = new File(m_Dir,"Hulu_Data.txt");
+        m_FilePath = m_File.getPath();
         m_UserAgent = new UserAgent();
         m_WebData = "";
-
         if (CreateFile() == true)
         {
             try
@@ -95,6 +89,11 @@ public class Jaunt_Scraper {
     public String GetPath()
     {
         return m_FilePath;
+    }
+
+    public File GetDirectory()
+    {
+        return m_Dir;
     }
 
 }
