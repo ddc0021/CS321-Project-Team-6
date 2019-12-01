@@ -6,9 +6,6 @@ import java.io.*;
 import java.util.*;
 
 public interface Parser_Interface {
-    //Writer m_FileWriter = null;
-    // String m_WebData = null;
-
-    public ArrayList<String> ParseData(String FilePath);
-    public void WriteData(ArrayList<String> FileData);
+    public void ParseData(String FilePath, File Directory);
+    public void WriteData(ArrayList<String> FormattedData);
 }
