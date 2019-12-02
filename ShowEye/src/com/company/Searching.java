@@ -29,7 +29,8 @@ public class Searching {
 
     /**
      *  Will store a shows data into an entertainment object called DataStore, The user needs to provide a title/name.
-     *  Method will return after the user has input the show title and selected which platform or both platforms they wish to search through.
+     *  Method will return after the user has input the show title and selected which platform or both platforms 
+     *  they wish to search through.
      *
      * @param userString a user given string that will hold the title/name of the show/movie that the user would like to locate within the Json files.
      * @param pathname is the path to the json files FauxFlix and hulu data file.
@@ -65,7 +66,8 @@ public class Searching {
             {
                 CompareString = scanner.nextLine();
 
-                // While the scanner has the next line it wil check to see if the current line of data contains any of the contents of the CurrentData string.
+                // While the scanner has the next line it wil check to see if the current line 
+                // of data contains any of the contents of the CurrentData string.
                 if (CompareString.contains(CurrentData))
                 {
 
@@ -94,21 +96,20 @@ public class Searching {
     }
 
     /**
-     * Will return
-     * @param userString
-     * @param pathname
-     * @return
+     * Will store a shows data into an entertainment object called DataStore, The user needs to select from a drop down 
+     * what genere they are wanting to see results from. The method will return after the user has selected the genere and
+     * selected which platform or both platforms they wish to search through.
+     *
+     * @param userString a user given string that will hold selected genere that the user would like to locate within the Json files. 
+     * @param pathname is the path to the json files FauxFlix and hulu data file.
+     * @return An arrayList of entertainment objects named DataStore
      */
     public ArrayList<Entertainment> Search_by_Genre (String userString, String pathname)
     {
         // Reading the file name.
         file = new File(pathname);
-
-        //String CurrentData = "\"name\": \"";
-
-        // Scanner input = new Scanner(System.in);
-        // CurrentData = CurrentData + userString + "\"";
-
+        
+        // Try/catch to check that the provided file path contained a valid file.
         try {
             Reader fileReader = new FileReader(file);
         }
@@ -116,6 +117,12 @@ public class Searching {
             return null;
         }
 
+        // Try statement to initalize a scanner object and while the scanner has the nextline it will branch initializing the CompareString 
+        // variable to the nextline. Then it will fall into a if statement to check if the CompareString variable has a name fomat signifying 
+        // that has found the begining of a show entry. Once it has found the beginning of a show entry it will initalize the string variables
+        // genre, description, and rating to the scanner object. then it will drop into a if statement to see if the genere variable has the same
+        // string as userString which was provided by the user if so it will set the DataStore equal to to a new Entertainment object and eill
+        // fill the Entertainment object with the the title, description, rating, and platform then adds it to the ArrayList Entertainment_Holder and returns it.
         try {
             Scanner scanner = new Scanner(file);
             Entertainment_Holder = new ArrayList<Entertainment>();
