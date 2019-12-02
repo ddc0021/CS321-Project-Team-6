@@ -27,17 +27,27 @@ public class Searching {
         Entertainment_Holder = null;
     }
 
-
+    /**
+     *  Will store a shows data into an entertainment object called DataStore, The user needs to provide a title/name.
+     *  Method will return after the user has input the show title and selected which platform or both platforms they wish to search through.
+     *
+     * @param userString a user given string that will hold the title/name of the show/movie that the user would like to locate within the Json files.
+     * @param pathname is the path to the json files FauxFlix and hulu data file.
+     * @return the entertainment object Datastore
+     */
     public Entertainment Search_by_Name (String userString, String pathname)
     {
         // Reading the file name.
         file = new File(pathname);
 
+        // Initializing a string to format the string provided by the user to put into a more searchable format that
+        // will return with more accurate results.
         String CurrentData = "\"name\":\"";
 
         // Scanner input = new Scanner(System.in);
         CurrentData = CurrentData + userString + "\"";
 
+        // Try/catch that makes sure the file path exists. if not throw an exception.
         try {
             Reader fileReader = new FileReader(file);
         }
@@ -47,10 +57,15 @@ public class Searching {
 
         try {
 
+            // New Scanner object to read through each element of the files.
             Scanner scanner = new Scanner(file);
+
+            // While loop to step through the file.
             while (scanner.hasNextLine())
             {
                 CompareString = scanner.nextLine();
+
+                // While the scanner has the next line it wil check to see if the current line of data contains any of the contents of the CurrentData string.
                 if (CompareString.contains(CurrentData))
                 {
 
@@ -79,7 +94,7 @@ public class Searching {
     }
 
     /**
-     *
+     * Will return
      * @param userString
      * @param pathname
      * @return
@@ -139,5 +154,4 @@ public class Searching {
         }
     }
 }
-
 
