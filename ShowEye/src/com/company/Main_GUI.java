@@ -24,12 +24,12 @@ public class MainGUI {
         JFrame my_Container = new JFrame();
         my_Container.setTitle("Initialization");
         my_Container.setSize(400, 400);
-        my_Container.setLayout(null);
+        my_Container.setLayout(new FlowLayout());
         JPanel my_panel = new JPanel();
         my_panel.setBounds(150, 130, 100, 100);
-        my_panel.setLayout(new BoxLayout(my_panel, BoxLayout.Y_AXIS));
-        my_Container.add(my_panel);
+        //my_Container.add(my_panel);
 
+        JLabel my_instructions = new JLabel("Choose which platforms whose libraries you would like to search from");
         JCheckBox box_Hulu = new JCheckBox("Hulu");
         JCheckBox box_FauxFlix = new JCheckBox("FauxFlix");
         JButton go_button = new JButton("Go");
@@ -62,50 +62,63 @@ public class MainGUI {
 
         my_panel.setLayout(new BoxLayout(my_panel, BoxLayout.PAGE_AXIS));
 
+        my_panel.setSize(400,400);
+        my_panel.add(my_instructions);
         my_panel.add(box_FauxFlix);
         my_panel.add(box_Hulu);
         my_panel.add(go_button);
         my_Container.add(my_panel);
-        my_Container.setSize(400, 400);
+        my_Container.setSize(450, 150);
         my_Container.setVisible(true);
     }
 
     public static void Search() {
         JFrame my_frame = new JFrame();
         my_frame.setTitle("Search");
-        String[] list_of_genres = {"Action-Adventure", "Comedy", "Drama", "Horror", "Sci-Fi", "Suspense"};
+        String[] list_of_genres = {"Action", "Adult Animation", "Adventure", "Animation", "Business and Finance", "Comedy",
+                "Crime", "Dark", "Detective", "Documentary", "Drama", "Family", "Fantasy",  "Horror", "Kids", "Late Night",
+                "Legal", "Medical",  "Music", "Mystery", "Political", "Romance", "Reality", "Satire", "Science Fiction",
+                "Sitcom", "Sketch Comedy", "Superheroes", "Suspense"};
 
-        JTextArea my_textarea = new JTextArea(1, 20);
-        final JPanel[] search_by_name = {new JPanel()};
-        search_by_name[0].add(my_textarea);
+        JTextArea my_textarea = new JTextArea(1, 25);
+        JPanel search_by_name = new JPanel();
+        search_by_name.setLayout(new FlowLayout());
+        search_by_name.add(my_textarea);
         JCheckBox box_Hulu_N = new JCheckBox("Hulu");
         JCheckBox box_FauxFlix_N = new JCheckBox("FauxFlix");
         JCheckBox box_Hulu_G = new JCheckBox("Hulu");
         JCheckBox box_FauxFlix_G = new JCheckBox("FauxFlix");
-        if (set_Hulu == true) {
-            search_by_name[0].add(box_Hulu_N);
+        if (set_Hulu == true)
+        {
+            search_by_name.add(box_Hulu_N);
         }
-        if (set_FauxFlix) {
-            search_by_name[0].add(box_FauxFlix_N);
+        if (set_FauxFlix == true)
+        {
+            search_by_name.add(box_FauxFlix_N);
         }
         JButton button_SearchN = new JButton("Search");
-        search_by_name[0].add(button_SearchN);
+        search_by_name.add(button_SearchN);
 
         button_SearchN.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent event) {
+            public void actionPerformed(ActionEvent event)
+            {
 
                 search_by_name_flag = true;
                 search_by_genre_flag  = false;
+                String my_string = my_textarea.getText();
 
-                if (box_Hulu_N.isSelected()) {
-                    m_show_name = my_search.Search_by_Name(my_textarea.getText(), "C:\\Users\\Nic Bannister\\Documents\\ShowEye_Team6\\Data\\PD.json");
+                if (box_Hulu_N.isSelected() && my_string != null)
+                {
+                    m_show_name = my_search.Search_by_Name(my_string, "C:\\Users\\Nic Bannister\\Documents\\ShowEye_Team6\\Data\\PD.json");
                     m_show_names.add(m_show_name);
                 }
-                if (box_FauxFlix_N.isSelected()) {
-                    m_show_name = my_search.Search_by_Name(my_textarea.getText(), "C:\\Users\\Nic Bannister\\Documents\\ShowEye_Team6\\Data\\FauxFlix.json");
+                if (box_FauxFlix_N.isSelected() && my_string != null)
+                {
+                    m_show_name = my_search.Search_by_Name(my_string, "C:\\Users\\Nic Bannister\\Documents\\ShowEye_Team6\\Data\\FauxFlix.json");
                     m_show_names.add(m_show_name);
                 }
-                if (!box_Hulu_N.isSelected() && !box_FauxFlix_N.isSelected()) {
+                if ((!box_Hulu_N.isSelected() && !box_FauxFlix_N.isSelected()) || my_string == null)
+                {
                     JOptionPane my_pane_2 = new JOptionPane();
 
                     JOptionPane.showMessageDialog(null,
@@ -113,7 +126,8 @@ public class MainGUI {
                             "Oops",
                             JOptionPane.INFORMATION_MESSAGE);
                 }
-                if (box_Hulu_N.isSelected() || box_FauxFlix_N.isSelected()) {
+                if (box_Hulu_N.isSelected() || box_FauxFlix_N.isSelected())
+                {
                     MainGUI.Results();
                     my_frame.dispatchEvent(new WindowEvent(my_frame, WindowEvent.WINDOW_CLOSING));
                 }
@@ -125,7 +139,8 @@ public class MainGUI {
         my_combobox.setSelectedIndex(0);
         JPanel search_by_genre = new JPanel();
         search_by_genre.add(my_combobox);
-        if (set_Hulu == true) {
+        if (set_Hulu == true)
+        {
             search_by_genre.add(box_Hulu_G);
         }
         if (set_FauxFlix) {
@@ -168,19 +183,20 @@ public class MainGUI {
             }
         });
 
-        JTabbedPane my_search = new JTabbedPane();
+        JTabbedPane my_tabbed_search = new JTabbedPane();
 
-        my_search.setBounds(50, 50, 300, 200);
-        my_search.add("Search By Name", search_by_name[0]);
-        my_search.add("Search By Genre", search_by_genre);
-        my_frame.add(my_search);
-        my_frame.setSize(400, 400);
+        my_tabbed_search.setBounds(50, 50, 300, 100);
+        my_tabbed_search.add("Search By Name", search_by_name);
+        my_tabbed_search.add("Search By Genre", search_by_genre);
+        my_frame.add(my_tabbed_search);
+        my_frame.setSize(400, 250);
         my_frame.setLayout(null);
         my_frame.setVisible(true);
     }
 
     public static void Results() {
         JFrame frame = new JFrame();
+        JPanel panel = new JPanel();
         String[] my_columns = {"Title", "Description", "Rating","Genres","Platform"};
         DefaultTableModel my_model = new DefaultTableModel();
         JTable my_table = new JTable(my_model);
@@ -263,12 +279,15 @@ public class MainGUI {
             }
         });
 
+        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //frame.add(search_again);
-        //frame.add(close_program);
-        frame.setSize(400, 400);
+        frame.setSize(1900, 1000);
         frame.setTitle("Results Page");
-        frame.add(new JScrollPane(my_table));
+        panel.add(new JScrollPane(my_table));
+        panel.add(search_again);
+        panel.add(close_program);
+        frame.add(panel);
+
         frame.setVisible(true);
     }
 }
