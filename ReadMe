@@ -1,6 +1,6 @@
 To run the user needs to grab the lates version of the Jaunt scaper jar found here: https://jaunt-api.com/download.htm and put 
 it in the class path of the project .
 
-then the user also needs to change the file paths located in the button_SearchN.addActionListener() method of Main_GUI.java to the
+then the user also needs to change the file paths located in the button_SearchN.addActionListener() for searching by name method of Main_GUI.java to the
 current location of the Data folder located within the project folder. The same steps need to be enacted onto the file paths defined in
-the button_SearchG.addActionListener() method of the same .java.
+the button_SearchG.addActionListener() method for searching by genere of the same .java.
