@@ -11,8 +11,8 @@ public class MainGUI {
     public static boolean set_FauxFlix = false;
     public static boolean search_by_name_flag = false;
     public static boolean search_by_genre_flag = false;
-    public static int rows_x = 0;
-    public static int columns_y = 5;
+    //public static int rows_x = 0;
+    //public static int columns_y = 5;
     public static ArrayList<Entertainment> m_show_HuluNames = null;
     public static ArrayList<Entertainment> m_show_FauxNames = null;
     public static ArrayList<Entertainment> m_show_HuluGenres = null;
@@ -21,18 +21,14 @@ public class MainGUI {
 
 
     /**
-     *
      * Constructs and displays the Initialization GUI (2 checkboxes and a Go button). Offers users to select FauxFLix
      * and/or Hulu via the two JCheckBoxes. Depending on which boxes are selected, it will call Parse_Hulu to parse the
      * scraped data. It will handle attempting to press go without checking a box first. Once a box has been checked and
      * the go button has been press, flags indicating which platforms were parsed will be set and Search() will be called.
-     *
      * @param Parser The instantiated Parse_Hulu object that will be used to parse through the scraped Hulu json fiile.
      * @param Scraper The instantiated Scraper object that will be used to obtain the file name and file path of scraped json file.
      */
     public static void Initialization(Parse_Hulu Parser, Jaunt_Scraper Scraper) {
-        
-        //Initializes each element of the Initialization GUI and formats them.
         JFrame my_Container = new JFrame();
         my_Container.setTitle("Initialization");
         my_Container.setSize(400, 400);
@@ -73,7 +69,7 @@ public class MainGUI {
             }
         });
 
-        //Further formats the GUI elements of Initialization.
+        //Formats the GUI elements of Initialization()
         my_panel.setLayout(new BoxLayout(my_panel, BoxLayout.PAGE_AXIS));
 
         my_panel.setSize(400,400);
@@ -87,13 +83,11 @@ public class MainGUI {
     }
 
     /**
-     *
      * Constructs and displays the Search GUI (a JTabbedPane with 2 tabs, a JTextArea, a JComboBox, and 2 JCheckBoxes
      * and a Search button for both tabs). If on the first tab, accepts a text input from a user and calls the
      * Search_by_Name method from Searching. If on the seocond tab, allows users to select from a list of genres in a
      * combo box and calls the Search_by_Genre methods from Searching. It will handle attempting to press search without
      * checking a box first. Once the appropriate methods of Searching have been called, it will call Results();
-     *
      */
     public static void Search() {
         JFrame my_frame = new JFrame();
@@ -105,7 +99,6 @@ public class MainGUI {
                 "Legal", "Medical",  "Music", "Mystery", "Political", "Romance", "Reality", "Satire", "Science Fiction",
                 "Sitcom", "Sketch Comedy", "Superheroes", "Suspense"};
 
-        //Initializes each element of the Search GUI and formats them.
         JTextArea my_textarea = new JTextArea(1, 25);
         JPanel search_by_name = new JPanel();
         search_by_name.setLayout(new FlowLayout());
@@ -137,7 +130,7 @@ public class MainGUI {
 
                 if (box_Hulu_N.isSelected() && !my_string.equals(""))
                 {
-                    m_show_HuluNames = my_search.Search_by_Name(my_string, "C:\\Users\\Nic Bannister\\Documents\\ShowEye_Team6\\Data\\PD.json");
+                    m_show_HuluNames = my_search.Search_by_Name(my_string, "D:\\ShowEye_Team6\\Data\\PD.json");
 
                     if(m_show_HuluNames.size() < 1)
                     {
@@ -146,7 +139,7 @@ public class MainGUI {
                 }
                 if (box_FauxFlix_N.isSelected() && !my_string.equals(""))
                 {
-                    m_show_FauxNames = my_search.Search_by_Name(my_string, "C:\\Users\\Nic Bannister\\Documents\\ShowEye_Team6\\Data\\FauxFlix.json");
+                    m_show_FauxNames = my_search.Search_by_Name(my_string, "D:\\ShowEye_Team6\\Data\\FauxFlix.json");
 
                     if(m_show_FauxNames.size() < 1)
                     {
@@ -198,12 +191,12 @@ public class MainGUI {
 
                 if (box_Hulu_G.isSelected()) {
 
-                    m_show_HuluGenres = my_search.Search_by_Genre(z, "C:\\Users\\Nic Bannister\\Documents\\ShowEye_Team6\\Data\\PD.json");
-                    rows_x = 1;
+                    m_show_HuluGenres = my_search.Search_by_Genre(z, "D:\\ShowEye_Team6\\Data\\PD.json");
+                    //rows_x = 1;
                 }
                 if (box_FauxFlix_G.isSelected()) {
-                    m_show_fauxGenres = my_search.Search_by_Genre(z, "C:\\Users\\Nic Bannister\\Documents\\ShowEye_Team6\\Data\\FauxFlix.json");
-                    columns_y = 5;
+                    m_show_fauxGenres = my_search.Search_by_Genre(z, "D:\\ShowEye_Team6\\Data\\FauxFlix.json");
+                    //columns_y = 5;
                 }
                 if (!box_Hulu_G.isSelected() && !box_FauxFlix_G.isSelected()) {
                     JOptionPane my_pane_3 = new JOptionPane();
@@ -220,7 +213,7 @@ public class MainGUI {
             }
         });
 
-        //Further formats the GUI elements of Search.
+        //Formats the GUI elements of Search()
         JTabbedPane my_tabbed_search = new JTabbedPane();
 
         my_tabbed_search.setBounds(50, 50, 300, 100);
@@ -233,16 +226,12 @@ public class MainGUI {
     }
 
     /**
-     *
      * Constructs and displays the Results GUI (A JTable and two JButtons to handle flow). Depending on which method(s)
      * from Searching was called in Search(), multiple rows filled with information obtained via the previously mentioned
      * method calls will be added to the JTable. The first button will call Search() again and allow the user to conduct
      * another search, while the second button will close the program.
-     *
      */
     public static void Results() {
-        
-        //Initializes each element of the Results GUI and formats them.
         JFrame frame = new JFrame();
         JPanel panel = new JPanel();
         String[] my_columns = {"Title", "Description", "Rating","Genres","Platform"};
@@ -347,7 +336,7 @@ public class MainGUI {
             }
         });
 
-        //Further formats the GUI elements of Results.
+        //Formats the GUI elements of Results()
         panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1900, 1000);
