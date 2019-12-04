@@ -13,13 +13,19 @@ public class MainGUI {
     public static boolean search_by_genre_flag = false;
     public static int rows_x = 0;
     public static int columns_y = 5;
-    public static Entertainment m_show_name = null;
-    public static ArrayList<Entertainment> m_show_names = new ArrayList<Entertainment>();
+    public static ArrayList<Entertainment> m_show_HuluNames = null;
+    public static ArrayList<Entertainment> m_show_FauxNames = null;
     public static ArrayList<Entertainment> m_show_HuluGenres = null;
     public static ArrayList<Entertainment> m_show_fauxGenres = null;
     public static Searching my_search = new Searching();
 
 
+    /**
+     * Constructs the Initialization GUI. Offers users to select FauxFLix and/or Hulu via JCheckBoxes. Depending on which shows are selected,
+     * will call 
+     * @param Parser
+     * @param Scraper
+     */
     public static void Initialization(Parse_Hulu Parser, Jaunt_Scraper Scraper) {
         JFrame my_Container = new JFrame();
         my_Container.setTitle("Initialization");
@@ -72,6 +78,9 @@ public class MainGUI {
         my_Container.setVisible(true);
     }
 
+    /**
+     *
+     */
     public static void Search() {
         JFrame my_frame = new JFrame();
         my_frame.setTitle("Search");
@@ -102,22 +111,30 @@ public class MainGUI {
         button_SearchN.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event)
             {
-
                 search_by_name_flag = true;
                 search_by_genre_flag  = false;
                 String my_string = my_textarea.getText();
 
-                if (box_Hulu_N.isSelected() && my_string != null)
+                if (box_Hulu_N.isSelected() && !my_string.equals(""))
                 {
-                    m_show_name = my_search.Search_by_Name(my_string, "C:\\Users\\Nic Bannister\\Documents\\ShowEye_Team6\\Data\\PD.json");
-                    m_show_names.add(m_show_name);
+                    m_show_HuluNames = my_search.Search_by_Name(my_string, "C:\\Users\\Nic Bannister\\Documents\\ShowEye_Team6\\Data\\PD.json");
+
+                  if(m_show_HuluNames.size() < 1)
+                  {
+                      System.out.println("ERROR: Movie/Show not found in database!");
+                  }
                 }
-                if (box_FauxFlix_N.isSelected() && my_string != null)
+                if (box_FauxFlix_N.isSelected() && !my_string.equals(""))
                 {
-                    m_show_name = my_search.Search_by_Name(my_string, "C:\\Users\\Nic Bannister\\Documents\\ShowEye_Team6\\Data\\FauxFlix.json");
-                    m_show_names.add(m_show_name);
+                    m_show_FauxNames = my_search.Search_by_Name(my_string, "C:\\Users\\Nic Bannister\\Documents\\ShowEye_Team6\\Data\\FauxFlix.json");
+
+                    if(m_show_FauxNames.size() < 1)
+                    {
+                        System.out.println("ERROR: Movie/Show not found in FauxFile!");
+                    }
+
                 }
-                if ((!box_Hulu_N.isSelected() && !box_FauxFlix_N.isSelected()) || my_string == null)
+                if ((!box_Hulu_N.isSelected() && !box_FauxFlix_N.isSelected()))
                 {
                     JOptionPane my_pane_2 = new JOptionPane();
 
@@ -194,6 +211,9 @@ public class MainGUI {
         my_frame.setVisible(true);
     }
 
+    /**
+     *
+     */
     public static void Results() {
         JFrame frame = new JFrame();
         JPanel panel = new JPanel();
@@ -210,19 +230,32 @@ public class MainGUI {
         //Use the searched-for data to populate these strings with information
         //----------
 
-        if(search_by_name_flag == true && m_show_names != null)
+        if(search_by_name_flag == true && (m_show_FauxNames != null || m_show_HuluNames != null))
         {
-            for (Entertainment ent: m_show_names)
-            {
-                //String[][] test_string = {{ent.getName(), ent.getDescription(), ent.getRating(), ent.getGenre(), ent.getPlatform()}};
-                //my_table = new JTable(test_string, my_columns);
-                //my_table.(test_string);
-                my_model.insertRow(counter, new Object[] {ent.getName(), ent.getDescription(), ent.getRating(), ent.getGenre(), ent.getPlatform()});
-                //my_table.setBounds(30, 40, 200, 300);
-
-                counter++;
+            if(m_show_HuluNames != null && m_show_FauxNames != null) {
+                for (Entertainment ent : m_show_HuluNames) {
+                    my_model.insertRow(counter, new Object[]{ent.getName(), ent.getDescription(), ent.getRating(), ent.getGenre(), ent.getPlatform()});
+                    counter++;
+                }
+                for (Entertainment ent : m_show_FauxNames){
+                    my_model.insertRow(counter, new Object[]{ent.getName(), ent.getDescription(), ent.getRating(), ent.getGenre(), ent.getPlatform()});
+                    counter++;
+                }
             }
-            //my_scrollpane = new JScrollPane(my_table);
+            else if(m_show_HuluNames != null)
+            {
+                for (Entertainment ent : m_show_HuluNames) {
+                    my_model.insertRow(counter, new Object[]{ent.getName(), ent.getDescription(), ent.getRating(), ent.getGenre(), ent.getPlatform()});
+                    counter++;
+                }
+            }
+            else if(m_show_FauxNames != null)
+            {
+                for (Entertainment ent : m_show_FauxNames){
+                    my_model.insertRow(counter, new Object[]{ent.getName(), ent.getDescription(), ent.getRating(), ent.getGenre(), ent.getPlatform()});
+                    counter++;
+                }
+            }
         }
 
         else if((m_show_HuluGenres != null || m_show_fauxGenres != null) && search_by_genre_flag == true )
@@ -255,7 +288,7 @@ public class MainGUI {
 
         else
         {
-
+            System.out.println("ShowEye was unable to find your show. Please <Tell user what to do>");
         }
 
         //----------
@@ -268,6 +301,10 @@ public class MainGUI {
             public void actionPerformed(ActionEvent event) {
                 frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+                m_show_FauxNames = null;
+                m_show_HuluNames = null;
+                m_show_fauxGenres = null;
+                m_show_HuluGenres = null;
                 MainGUI.Search();
             }
         });
