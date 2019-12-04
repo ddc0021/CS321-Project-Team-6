@@ -11,10 +11,14 @@ public class Jaunt_Scraper {
     private UserAgent m_UserAgent;
     private String m_WebData;
     private String m_FilePath;
+    private static Jaunt_Scraper Instance = null;
 
-    public Jaunt_Scraper() //Must place scraper functionality in this class!!!
+    /**
+     *Constructor to create the instance for the singleton class of Jaunt_Scraper
+     *
+     */
+    private Jaunt_Scraper()
     {
-        //File path is specific to David's Mac
         m_Dir = new File("Data");
         m_Dir.mkdirs();
         m_File = new File(m_Dir,"Hulu_Data.txt");
@@ -37,6 +41,27 @@ public class Jaunt_Scraper {
         this.WriteFile();
     }
 
+    /**
+     * Returns a valid instance of the singleton design of the Jaunt_Scraper class.
+     *
+     * @return Instance
+     */
+    public static Jaunt_Scraper GetInstance()
+    {
+        if(Instance == null)
+        {
+            Instance = new Jaunt_Scraper();
+        }
+        return Instance;
+    }
+
+    /**
+     * The method creates a try/catch which will instantiate v named from the implementation of the jaunt scarper libraries where the user agent will
+     * be sent to the hulu website to scrape the pages and will assign it to th string m_WebData which is then returned. If it fails the try/catch
+     * it will return the variable m_WebData loaded with the exception message and return it.
+     *
+     * @return string m_WebData
+     */
     public String ScrapeData()
     {
         try
@@ -52,6 +77,12 @@ public class Jaunt_Scraper {
         }
     }
 
+    /**
+     * Try/catch initializes a If statement to check if a new file needs to be created to to store the scaped data (Hulu_Data.txt) and return true. If the
+     * file already exists it will print out a file already exists and returns true.
+     *
+     * @return boolian.
+     */
     private boolean CreateFile()
     {
         try
@@ -74,6 +105,13 @@ public class Jaunt_Scraper {
         }
     }
 
+    /**
+     *
+     *  Method creates a try/catch to take the scrape data function ScrapeData() and writes it to the file
+     *  obtained in the constructed of the jaunt_Scraper class. If it fails to locate the file it will fall to
+     *  the catch and print out and exception message.
+     *
+     */
     public void WriteFile()
     {
         try
