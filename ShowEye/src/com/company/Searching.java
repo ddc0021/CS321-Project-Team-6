@@ -42,6 +42,8 @@ public class Searching {
         // will return with more accurate results.
         String CurrentData = "\"name\":\"";
 
+
+        // Scanner input = new Scanner(System.in);
         CurrentData = CurrentData + userString;
 
         try {
