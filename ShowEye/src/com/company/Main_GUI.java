@@ -11,8 +11,8 @@ public class MainGUI {
     public static boolean set_FauxFlix = false;
     public static boolean search_by_name_flag = false;
     public static boolean search_by_genre_flag = false;
-    //public static int rows_x = 0;
-    //public static int columns_y = 5;
+    public static int rows_x = 0;
+    public static int columns_y = 5;
     public static ArrayList<Entertainment> m_show_HuluNames = null;
     public static ArrayList<Entertainment> m_show_FauxNames = null;
     public static ArrayList<Entertainment> m_show_HuluGenres = null;
@@ -199,11 +199,11 @@ public class MainGUI {
                 if (box_Hulu_G.isSelected()) {
 
                     m_show_HuluGenres = my_search.Search_by_Genre(z, "C:\\Users\\Nic Bannister\\Documents\\ShowEye_Team6\\Data\\PD.json");
-                    //rows_x = 1;
+                    rows_x = 1;
                 }
                 if (box_FauxFlix_G.isSelected()) {
                     m_show_fauxGenres = my_search.Search_by_Genre(z, "C:\\Users\\Nic Bannister\\Documents\\ShowEye_Team6\\Data\\FauxFlix.json");
-                    //columns_y = 5;
+                    columns_y = 5;
                 }
                 if (!box_Hulu_G.isSelected() && !box_FauxFlix_G.isSelected()) {
                     JOptionPane my_pane_3 = new JOptionPane();
